@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}menu{% endblock %}
+
+{% block body %}
+    <div class="row">
+
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Mesero</h3>
+                  <a href="{{ url('app_mesero') }}" class="btn btn-sm btn-primary">enviar</a>
+                </div>
+            </div>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Cliente</h3>
+                <a href="{{ url('app_cliente') }}" class="btn btn-sm btn-primary">enviar</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">cocinero</h3>
+                <a href="{{ url('app_cocinero') }}" class="btn btn-sm btn-primary">enviar</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

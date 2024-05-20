@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CocineroController!{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        {% for factura in facturas %}
+            {% if factura[0] is defined %}
+                <div class="card">
+                    <div class="card-header">
+                        <p class="h6">{{ factura[0].Factura.nombre }}</p>
+                    </div>
+                    <div class="card-body row">
+                        {% for item in factura %}
+                            <div class="card p-0 m-1">
+                                <div class="card-header {% if item.estado == 0 %} text-bg-danger{% else %}text-bg-success {% endif %}">
+                                    {{ item.Producto.codigo }}
+                                </div>
+                                <div class="card-body h6">
+                                    <blockquote class="blockquote mb-0">
+                                        <footer class="blockquote-footer"><cite
+                                                    title="Source Title">{{ item.Producto.nombre }}</cite></footer>
+                                    </blockquote>
+                                    {% if item.estado == 0 %} <button onclick="entregar({{ item.id }});" class="btn btn-sm btn-success">entregar
+                                    </button>{% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <button class="btn btn-sm btn-success" onclick="finalizar_factura({{ factura[0].Factura.id }})">finalizar</button>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <script>
+        const entregar = (id) => {
+            let url = "{{ url('app_entregar_pedido') }}";
+            let data = {id_detalle: id};
+            sendServer(url, data)
+        }
+        const sendServer = (url, data, respuest = (a) => {
+        }) => {
+            return fetch(url, {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {"Content-Type": "application/json"},
+            })
+                .then((res) => res.json())
+                .catch((error) => console.error("Error:", error))
+                .then((response) => respuest(response));
+        }
+        const finalizar_factura = (id) => {
+
+                let url = "{{ url('app_finalizar_pedido') }}";
+                let data = {id_factura: id};
+                sendServer(url, data)
+        }
+        setTimeout('document.location.reload()', 5000);
+    </script>
+{% endblock %}

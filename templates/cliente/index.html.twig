@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ClienteController!{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        {% for factura in facturas %}
+            {% if factura[0] is defined %}
+                <div class="card">
+                    <div class="card-header">
+                        <p class="h6">{{ factura[0].Factura.nombre }}</p>
+                    </div>
+                    <div class="card-body row">
+                        {% for item in factura %}
+                            <div class="card col-2 p-0 m-1">
+                                <div class="card-header {%if item.estado == 0 %} text-bg-danger{%else%}text-bg-success {%endif %}">
+                                    {{ item.Producto.codigo }}
+                                </div>
+                                <div class="card-body h6">
+                                    <blockquote class="blockquote mb-0">
+                                        <p>${{ item.Producto.precio }}</p>
+                                        <footer class="blockquote-footer"><cite
+                                                    title="Source Title">{{ item.Producto.nombre }}</cite></footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <script>
+        setTimeout('document.location.reload()', 3000);
+    </script>
+{% endblock %}

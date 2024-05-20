@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}mesero{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row pb-1">
+            <div class="card col-12">
+                <div class="card-header">
+                    <h5 class="lead">Factura No. _{{ num_factura }} <input class="form-control" type="text"
+                                                                           id="name_cliente"></h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group" id="pedido"></ul>
+                </div>
+                <div class="card-footer"><h3 id="total">Total $0</h3></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="d-flex" >
+                <div class="h1">1-Mas vendidos</div>
+            </div>
+            {% for producto in productos %}
+            {% if producto.grupo == 1 %}
+                <div class="btn-group pb-1 row" role="group" aria-label="Basic mixed styles example">
+                    <button class="btn btn-dark col-3">{{ producto.codigo }}</button>
+                    <div class="btn btn-ligth col-6"><p>{{ producto.nombre }}</p></div>
+                    <button onclick="sendig({{ num_factura }},{{ producto.id }})" type="button"
+                            class="btn btn-success col-3">Pedir
+                    </button>
+                </div>
+            {% endif %}
+            {% endfor %}
+            <div class="d-flex" >
+                <div class="h1">2-Arroz</div>
+            </div>
+            {% for producto in productos %}
+            {% if producto.grupo == 2 %}
+                <div class="btn-group pb-1 row" role="group" aria-label="Basic mixed styles example">
+                    <button class="btn btn-dark col-3">{{ producto.codigo }}</button>
+                    <div class="btn btn-ligth col-6"><p>{{ producto.nombre }}</p></div>
+                    <button onclick="sendig({{ num_factura }},{{ producto.id }})" type="button"
+                            class="btn btn-success col-3">Pedir
+                    </button>
+                </div>
+            {% endif %}
+            {% endfor %}
+            <div class="d-flex" >
+                <div class="h1">3-Pollo</div>
+            </div>
+            {% for producto in productos %}
+                {% if producto.grupo == 3 %}
+                    <div class="btn-group pb-1 row" role="group" aria-label="Basic mixed styles example">
+                        <button class="btn btn-dark col-3">{{ producto.codigo }}</button>
+                        <div class="btn btn-ligth col-6"><p>{{ producto.nombre }}</p></div>
+                        <button onclick="sendig({{ num_factura }},{{ producto.id }})" type="button"
+                                class="btn btn-success col-3">Pedir
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="d-flex" >
+                <div class="h1">4-Personales</div>
+            </div>
+            {% for producto in productos %}
+                {% if producto.grupo == 4 %}
+                    <div class="btn-group pb-1 row" role="group" aria-label="Basic mixed styles example">
+                        <button class="btn btn-dark col-3">{{ producto.codigo }}</button>
+                        <div class="btn btn-ligth col-6"><p>{{ producto.nombre }}</p></div>
+                        <button onclick="sendig({{ num_factura }},{{ producto.id }})" type="button"
+                                class="btn btn-success col-3">Pedir
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="d-flex" >
+                <div class="h1">5-Cremas</div>
+            </div>
+            {% for producto in productos %}
+                {% if producto.grupo == 5 %}
+                    <div class="btn-group pb-1 row" role="group" aria-label="Basic mixed styles example">
+                        <button class="btn btn-dark col-3">{{ producto.codigo }}</button>
+                        <div class="btn btn-ligth col-6"><p>{{ producto.nombre }}</p></div>
+                        <button onclick="sendig({{ num_factura }},{{ producto.id }})" type="button"
+                                class="btn btn-success col-3">Pedir
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="d-flex" >
+                <div class="h1">6-chop suey</div>
+            </div>
+            {% for producto in productos %}
+                {% if producto.grupo == 6 %}
+                    <div class="btn-group pb-1 row" role="group" aria-label="Basic mixed styles example">
+                        <button class="btn btn-dark col-3">{{ producto.codigo }}</button>
+                        <div class="btn btn-ligth col-6"><p>{{ producto.nombre }}</p></div>
+                        <button onclick="sendig({{ num_factura }},{{ producto.id }})" type="button"
+                                class="btn btn-success col-3">Pedir
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="d-flex" >
+                <div class="h1">7-Sopa Pasta</div>
+            </div>
+            {% for producto in productos %}
+                {% if producto.grupo == 7 %}
+                    <div class="btn-group pb-1 row" role="group" aria-label="Basic mixed styles example">
+                        <button class="btn btn-dark col-3">{{ producto.codigo }}</button>
+                        <div class="btn btn-ligth col-6"><p>{{ producto.nombre }}</p></div>
+                        <button onclick="sendig({{ num_factura }},{{ producto.id }})" type="button"
+                                class="btn btn-success col-3">Pedir
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="d-flex" >
+                <div class="h1">8-Adicionales</div>
+            </div>
+            {% for producto in productos %}
+                {% if producto.grupo == 8 %}
+                    <div class="btn-group pb-1 row" role="group" aria-label="Basic mixed styles example">
+                        <button class="btn btn-dark col-3">{{ producto.codigo }}</button>
+                        <div class="btn btn-ligth col-6"><p>{{ producto.nombre }}</p></div>
+                        <button onclick="sendig({{ num_factura }},{{ producto.id }})" type="button"
+                                class="btn btn-success col-3">Pedir
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        const sendig = (id_factura, id_producto) => {
+            let url = "{{ url('app_crear_pedido') }}";
+            let name_cliente = document.querySelector('#name_cliente').value
+            let data = {id_factura: id_factura, id_producto: id_producto, name_cliente: name_cliente};
+            sendServer(url, data, addlist)
+        }
+
+        const addlist = (response) => {
+            let ul = document.querySelector('#pedido');
+            ul.innerHTML = ''
+            let total = 0;
+            for (const detalle of response.detalles) {
+                let li = createLi(detalle.Producto.nombre + '  $' + detalle.Producto.precio, detalle.id, detalle.Factura.numero);
+                ul.append(li);
+                total = total + detalle.Producto.precio;
+            }
+
+            let tag_total = document.querySelector('#total').innerHTML = 'Total $' +total;
+
+        }
+
+        const createLi = (data, idDetalle = 0, idFactura = 0) => {
+            let li = document.createElement("li");
+            li.classList = 'list-group-item';
+            let liContent = document.createTextNode(data + ' ');
+            li.appendChild(liContent);
+            if (idDetalle) {
+                let button = document.createElement("button");
+                button.classList = 'btn btn-sm btn-danger';
+                button.innerHTML = 'X'
+                button.dataset.detalle = idDetalle;
+                button.dataset.factura = idFactura;
+                button.addEventListener('click', (e) => {
+                    removeItem(e.target);
+                })
+                li.appendChild(button);
+            }
+            return li;
+        }
+
+        const removeItem = (item) => {
+            let url = "{{ url('app_eliminar_pedido') }}";
+            let data = {id_factura: item.dataset.factura, id_detalle: item.dataset.detalle};
+            sendServer(url, data, addlist)
+        }
+
+        const sendServer = (url, data, respuest = (a) => {
+        }) => {
+            return fetch(url, {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {"Content-Type": "application/json"},
+            })
+                .then((res) => res.json())
+                .catch((error) => console.error("Error:", error))
+                .then((response) => respuest(response));
+        }
+    </script>
+{% endblock %}
